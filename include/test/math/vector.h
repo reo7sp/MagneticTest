@@ -25,37 +25,91 @@
 #include <math.h>
 
 struct Vector {
-	int x;
-	int y;
-	int z;
+	double x = 0.0;
+	double y = 0.0;
+	double z = 0.0;
 };
 
-inline int calculateVectorLengthSq(const struct Vector* a) {
+inline double calculateVectorLengthSq(const struct Vector* a) {
+	if (!a) {
+		return 0.0;
+	}
 	return a->x * a->x + a->y * a->y + a->z * a->z;
 }
 
-inline int calculateVectorLength(const struct Vector* a) {
+inline double calculateVectorLength(const struct Vector* a) {
+	if (!a) {
+		return 0.0;
+	}
 	return sqrt(calculateVectorLengthSq(a));
 }
 
+inline short isVectorsEqual(const struct Vector* a, const struct Vector* b) {
+	return !a && !b && a->x == b->x && a->y == b->y && a->z == b->z;
+}
+
+inline struct Vector getOppositeVector(const struct Vector* a) {
+	if (!a) {
+		return { 0.0, 0.0, 0.0 };
+	}
+	return { -a->x, -a->y, -a->z };
+}
+
 inline struct Vector sumVectors(const struct Vector* a, const struct Vector* b) {
+	if (!a && !b) {
+		return { 0.0, 0.0, 0.0 };
+	} else if (!a) {
+		return *b;
+	} else if (!b) {
+		return *a;
+	}
 	return { a->x + b->x, a->y + b->y, a->z + b->z };
 }
 
 inline struct Vector substractVectors(const struct Vector* a, const struct Vector* b) {
+	if (!a && !b) {
+		return { 0.0, 0.0, 0.0 };
+	} else if (!a) {
+		return *b;
+	} else if (!b) {
+		return getOppositeVector(a);
+	}
 	return { a->x - b->x, a->y - b->y, a->z - b->z };
 }
 
 inline struct Vector multiplyVector(const struct Vector* a, int b) {
+	if (!a || !b) {
+		return { 0.0, 0.0, 0.0 };
+	}
 	return { a->x * b, a->y * b, a->z * b };
 }
 
-inline int dotProduct(const struct Vector* a, const struct Vector* b) {
+inline struct Vector divideVector(const struct Vector* a, int b) {
+	if (!a || !b) {
+		return { 0.0, 0.0, 0.0 };
+	}
+	return { a->x / b, a->y / b, a->z / b };
+}
+
+inline double dotProduct(const struct Vector* a, const struct Vector* b) {
+	if (!a || !b) {
+		return 0.0;
+	}
 	return a->x * b->x + a->y * b->y + a->z * b->z;
 }
 
 inline struct Vector crossProduct(const struct Vector* a, const struct Vector* b) {
+	if (!a || !b) {
+		return { 0.0, 0.0, 0.0 };
+	}
 	return { a->y * b->z - a->z * b->y, a->z * b->x - a->x * b->z, a->x * b->y - a->y * b->x };
+}
+
+inline struct Vector normalizeVector(const struct Vector* a) {
+	if (!a) {
+		return { 0.0, 0.0, 0.0 };
+	}
+	return divideVector(a, calculateVectorLength(a));
 }
 
 #endif //TEST_VECTOR_H
