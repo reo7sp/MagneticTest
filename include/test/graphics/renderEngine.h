@@ -19,9 +19,9 @@
  * THE SOFTWARE.
  */
 
-#ifndef TEST_RENDERER_H
-#define TEST_RENDERER_H
+#ifndef TEST_RENDERENGINE_H
+#define TEST_RENDERENGINE_H
 
-int rendMain(int argc, char **argv);
+int renderEngineMain(int argc, char **argv);
 
-#endif //TEST_RENDERER_H
+#endif //TEST_RENDERENGINE_H

@@ -19,8 +19,8 @@
  * THE SOFTWARE.
  */
 
-#include "test/renderer.h"
+#include "test/graphics/renderEngine.h"
 
 int main(int argc, char **argv) {
-	return rendMain(argc, argv);
+	return renderEngineMain(argc, argv);
 }

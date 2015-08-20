@@ -19,17 +19,23 @@
  * THE SOFTWARE.
  */
 
-#ifndef TEST_FUNCTIONS_H
-#define TEST_FUNCTIONS_H
+#include "test/graphics/magneticFieldRenderer.h"
 
-#define min(a, b) ((a) < (b) ? a)
+struct Conductor {
+	float I = 0;
+	float l = 0;
+}
 
-#define max(a, b) ((a) > (b) ? a)
+static Conductor[] _conductors;
 
-#define clamp(val, minVal, maxVal) (min(max((val), (minVal)), (maxVal)))
+int initMagneticField() {
+	return 1;
+}
 
-#define sign2(a, b) ((a) < (b) ? -1 : ((a) == (b) ? 0 : 1))
+void updateMagneticField(struct RenderContext renderContext) {
 
-#define sign(a) (sign2((a), 0))
+}
 
-#endif //TEST_FUNCTIONS_H
+void renderMagneticField(struct RenderContext renderContext) {
+
+}

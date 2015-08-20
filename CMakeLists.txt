@@ -8,7 +8,8 @@ option(ENABLE_TESTS "Set to ON to enable building of tests" ON)
 include_directories(include)
 set(SRC_LIST
 	src/main.c
-	src/renderer.c
+	src/graphics/renderEngine.c
+	src/graphics/magneticFieldRenderer.c
 )
 
 ### libs

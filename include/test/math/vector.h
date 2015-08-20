@@ -44,7 +44,7 @@ inline double calculateVectorLength(const struct Vector* a) {
 	return sqrt(calculateVectorLengthSq(a));
 }
 
-inline short isVectorsEqual(const struct Vector* a, const struct Vector* b) {
+inline int isVectorsEqual(const struct Vector* a, const struct Vector* b) {
 	return !a && !b && a->x == b->x && a->y == b->y && a->z == b->z;
 }
 

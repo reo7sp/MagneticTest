@@ -19,63 +19,47 @@
  * THE SOFTWARE.
  */
 
-#include "test/renderer.h"
+#include "test/graphics/renderEngine.h"
 
 #include <stdio.h>
 
 #include <GL/glew.h>
+#if defined(linux) || defined(_WIN32)
 #include <GL/glut.h>
+#else
+#include <GLUT/GLUT.h>
+#endif
 
+#include "test/graphics/renderContext.h"
+#include "test/graphics/magneticFieldRenderer.h"
 #include "test/tools/timeTools.h"
 
 #define MAX_FPS 30
 #define MAX_DELTA_MS 1000 / MAX_FPS
 
-unsigned long lastFpsUpdateTime = 0;
-unsigned int fps = 0;
-unsigned int fpsRaw = 0;
-double lastDeltaUpdateTime = 0;
+static float _delta = 0;
+static double _lastDeltaUpdateTime = 0;
 
-
-double calculateDelta() {
+static float updateDelta() {
 	double now = getTimeDetailed();
-	double delta = now - lastDeltaUpdateTime;
+	_delta = now - lastDeltaUpdateTime;
 	lastDeltaUpdateTime = now;
 	return delta;
 }
 
-int updateFpsCounter() {
-	++fpsRaw;
-	unsigned long now = getTime();
-	if (now - lastFpsUpdateTime > 1) {
-		fps = fpsRaw;
-		fpsRaw = 0;
-		lastFpsUpdateTime = now;
-		return 1;
-	}
-	return 0;
+static int onInit() {
+	return initMagneticField();
 }
 
-int writeFpsToStdout() {
-	printf("FPS: %d\n", fps);
-	//printf("FPS: %d\r", fps);
-	//fflush(stdout);
-}
-
-int onInit() {
-	return 1;
-}
-
-int onUpdate(int value) {
-	double dt = calculateDelta();
+static int onUpdate(int value) {
+	updateDelta();
 	glutPostRedisplay();
 	glutTimerFunc(MAX_DELTA_MS, onUpdate, 0);
+
+	updateMagneticField({ .delta = delta });
 }
 
-void onRender() {
-	if (updateFpsCounter()) {
-		writeFpsToStdout();
-	}
+static void onRender() {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	glBegin(GL_TRIANGLES);
@@ -84,22 +68,27 @@ void onRender() {
 		glVertex3f(1.0, -1.0, 0.0);
 	glEnd();
 
+	renderMagneticField({ .delta = delta });
+
 	glutSwapBuffers();
 }
 
-void onResize(int width, int height) {
+static void onResize(int width, int height) {
 	glViewport(0, 0, width, height);
 	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	gluOrtho2D(0, width, 0, height);
+	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 }
 
 
-int rendMain(int argc, char **argv) {
+int renderEngineMain(int argc, char **argv) {
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA);
 	glutInitWindowSize(800, 600);
 	glutInitWindowPosition(100, 100);
-	glutCreateWindow("ComplexNumTest by Reo_SP");
+	glutCreateWindow("MagneticTest by Reo_SP");
 
 	GLenum glewStatus = glewInit();
 	if (glewStatus != GLEW_OK) {
