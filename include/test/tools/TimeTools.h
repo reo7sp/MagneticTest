@@ -19,17 +19,10 @@
  * THE SOFTWARE.
  */
 
-#ifndef TEST_FUNCTIONS_H
-#define TEST_FUNCTIONS_H
+#ifndef TEST_TIMETOOLS_H
+#define TEST_TIMETOOLS_H
 
-#define min(a, b) ((a) < (b) ? a)
+double getTimeDetailed();
+unsigned long getTime();
 
-#define max(a, b) ((a) > (b) ? a)
-
-#define clamp(val, minVal, maxVal) (min(max((val), (minVal)), (maxVal)))
-
-#define sign2(a, b) ((a) < (b) ? -1 : ((a) == (b) ? 0 : 1))
-
-#define sign(a) (sign2((a), 0))
-
-#endif //TEST_FUNCTIONS_H
+#endif //TEST_TIMETOOLS_H

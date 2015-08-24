@@ -19,8 +19,17 @@
  * THE SOFTWARE.
  */
 
-#include "test/graphics/RenderEngine.h"
+#ifndef TEST_RENDERCONTEXT_H
+#define TEST_RENDERCONTEXT_H
 
-int main(int argc, char **argv) {
-	return renderEngineMain(argc, argv);
-}
+#include "test/math/Vector.h"
+#include "test/graphics/Camera.h"
+
+typedef struct RenderContext {
+	float updateDelta;
+	float renderDelta;
+	Vector windowSize;
+	Camera camera;
+} RenderContext;
+
+#endif //TEST_RENDERCONTEXT_H

@@ -19,23 +19,26 @@
  * THE SOFTWARE.
  */
 
-#include "test/graphics/magneticFieldRenderer.h"
+#include "test/physics/electromagnetism.h"
 
-struct Conductor {
-	float I = 0;
-	float l = 0;
+Vector calculateLorenzForce(double q, Vector E, Vector v, Vector B) {
+	return vectorMultiply(vectorSum(E, vectorCrossProduct(v, B)), q);
 }
 
-static Conductor[] _conductors;
-
-int initMagneticField() {
-	return 1;
+Vector calculateCoulombForce(double q, Vector E) {
+	return vectorMultiply(E, q);
 }
 
-void updateMagneticField(struct RenderContext renderContext) {
-
+Vector calculateElecticFieldPoint(double q, Vector r) {
+	const double rLenSq = vectorGetLengthSq(r);
+	const double rLen = sqrt(rLenSq);
+	return vectorMultiply(r, COULOMB_CONSTANT * q / rLenSq / rLen);
 }
 
-void renderMagneticField(struct RenderContext renderContext) {
-
+Vector calculateMagneticFieldPoint(double I, double permeability, Vector l, Vector r) {
+	const double constant = permeability / (4 * M_PI);
+	const Vector r1 = vectorSubstract(r, l);
+	const double r1LenSq = vectorGetLengthSq(r1);
+	const double r1Len = sqrt(r1LenSq);
+	return vectorMultiply(vectorCrossProduct(l, r1), constant * I / r1LenSq / r1Len);
 }

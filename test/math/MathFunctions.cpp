@@ -19,8 +19,36 @@
  * THE SOFTWARE.
  */
 
-#include "test/graphics/RenderEngine.h"
+#include <boost/test/unit_test.hpp>
 
-int main(int argc, char **argv) {
-	return renderEngineMain(argc, argv);
+#include <test/math/MathFunctions.h>
+
+BOOST_AUTO_TEST_SUITE(tFunctions)
+
+BOOST_AUTO_TEST_CASE(tmin) {
+	BOOST_CHECK_EQUAL(min(1, 2), 1);
 }
+
+BOOST_AUTO_TEST_CASE(tmax) {
+	BOOST_CHECK_EQUAL(max(1, 2), 2);
+}
+
+BOOST_AUTO_TEST_CASE(tclamp) {
+	BOOST_CHECK_EQUAL(clamp(-0.5, 0, 1), 0);
+	BOOST_CHECK_EQUAL(clamp(0.5, 0, 1), 0.5);
+	BOOST_CHECK_EQUAL(clamp(1.5, 0, 1), 1);
+}
+
+BOOST_AUTO_TEST_CASE(tsign2) {
+	BOOST_CHECK_EQUAL(sign2(1, 2), -1);
+	BOOST_CHECK_EQUAL(sign2(2, 2), 0);
+	BOOST_CHECK_EQUAL(sign2(3, 2), 1);
+}
+
+BOOST_AUTO_TEST_CASE(tsign) {
+	BOOST_CHECK_EQUAL(sign(-4), -1);
+	BOOST_CHECK_EQUAL(sign(0), 0);
+	BOOST_CHECK_EQUAL(sign(4), 1);
+}
+
+BOOST_AUTO_TEST_SUITE_END()

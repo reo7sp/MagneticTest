@@ -19,8 +19,34 @@
  * THE SOFTWARE.
  */
 
-#include "test/graphics/RenderEngine.h"
+#ifndef TEST_VECTOR_H
+#define TEST_VECTOR_H
 
-int main(int argc, char **argv) {
-	return renderEngineMain(argc, argv);
-}
+typedef struct Vector {
+	double x;
+	double y;
+	double z;
+} Vector;
+
+extern const Vector vectorZero;
+extern const Vector vectorOne;
+
+Vector vectorCreate(double x, double y, double z);
+double vectorGetLengthSq(Vector a);
+double vectorGetLength(Vector a);
+int vectorIsEqual(Vector a, Vector b);
+Vector vectorGetOpposite(Vector a);
+Vector vectorSum(Vector a, Vector b);
+Vector vectorSubstract(Vector a, Vector b);
+Vector vectorMultiply(Vector a, double b);
+Vector vectorDivide(Vector a, double b);
+double vectorDotProduct(Vector a, Vector b);
+Vector vectorCrossProduct(Vector a, Vector b);
+Vector vectorNormalize(Vector a);
+double vectorGetAngle(Vector a);
+Vector vectorGetRotation(Vector a);
+Vector vectorFromRotation(Vector r, double length);
+Vector vectorRotate(Vector a, Vector rotation);
+Vector vectorLerp(Vector from, Vector to, double time);
+
+#endif //TEST_VECTOR_H

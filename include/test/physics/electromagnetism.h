@@ -24,32 +24,14 @@
 
 #include <math.h>
 
-#include "test/math/vector.h"
+#include "test/math/Vector.h"
 
 #define ELECTRIC_PERMEABILITY 8.854187817 * 1.0e-12
-#define MAGNETIC_PERMEABILITY 4 * PI * 1.0e-7
-#define COULOMB_CONSTANT 1 / (4 * PI * ELECTRIC_PERMEABILITY)
+#define COULOMB_CONSTANT 1 / (4 * M_PI * ELECTRIC_PERMEABILITY)
 
-inline struct Vector calculateLorenzForce(double q, const Vector* E, const Vector* v, const Vector* B) {
-	return multiplyVector(sumVectors(E, crossProduct(v, B)), q);
-}
-
-inline struct Vector calculateCoulombForce(double q, const Vector* E) {
-	return calculateLorenzForce(q, E, NULL, NULL);
-}
-
-inline struct Vector calculateElecticFieldPoint(double q, const Vector* r) {
-	const double rLenSq = calculateVectorLengthSq(r);
-	const double rLen = sqrt(rLenSq);
-	return multiplyVector(r, COULOMB_CONSTANT * q / rLenSq / rLen);
-}
-
-inline struct Vector calculateMagneticFieldPoint(double I, const Vector* l, const Vector* r) {
-	static const constant = MAGNETIC_PERMEABILITY / (4 * PI);
-	const Vector r1 = substractVectors(r, l);
-	const double r1LenSq = calculateVectorLengthSq(r1);
-	const double r1Len = sqrt(r1LenSq);
-	return multiplyVector(crossProduct(l, &r1), constant * I * / r1LenSq / r1Len);
-}
+struct Vector calculateLorenzForce(double q, Vector E, Vector v, Vector B);
+struct Vector calculateCoulombForce(double q, Vector E);
+struct Vector calculateElecticFieldPoint(double q, Vector r);
+struct Vector calculateMagneticFieldPoint(double I, double permeability, Vector l, Vector r);
 
 #endif //TEST_ELECTOMAGNETISM_H

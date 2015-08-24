@@ -22,12 +22,10 @@
 #ifndef TEST_MAGNETICFIELDRENDERER_H
 #define TEST_MAGNETICFIELDRENDERER_H
 
-#include "test/graphics/renderContext.h"
+#include "test/graphics/RenderContext.h"
 
 int initMagneticField();
-
-void updateMagneticField(struct RenderContext renderContext);
-
-void renderMagneticField(struct RenderContext renderContext);
+void updateMagneticField(const RenderContext* context);
+void renderMagneticField(const RenderContext* context);
 
 #endif //TEST_MAGNETICFIELDRENDERER_H

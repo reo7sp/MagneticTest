@@ -19,20 +19,14 @@
  * THE SOFTWARE.
  */
 
-#ifndef TEST_TIMETOOLS_H
-#define TEST_TIMETOOLS_H
+#ifndef TEST_MATHFUNCTIONS_H
+#define TEST_MATHFUNCTIONS_H
 
-#include <time.h>
-#include <unistd.h>
+#define min(a, b) ((a) < (b) ? a : b)
+#define max(a, b) ((a) > (b) ? a : b)
+#define clamp(val, minVal, maxVal) (min(max((val), (minVal)), (maxVal)))
+#define sign2(a, b) ((a) < (b) ? -1 : ((a) == (b) ? 0 : 1))
+#define sign(a) (sign2((a), 0))
+#define lerp(from, to, time) ((1 - (time)) * (from) + (time) * (to))
 
-inline double getTimeDetailed() {
-	struct timespec spec;
-	clock_gettime(CLOCK_REALTIME, &spec);
-	return spec.tv_nsec / 1.0e9;
-}
-
-inline unsigned long getTime() {
-	return (unsigned long) time(NULL);
-}
-
-#endif //TEST_TIMETOOLS_H
+#endif //TEST_MATHFUNCTIONS_H

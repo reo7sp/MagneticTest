@@ -19,36 +19,15 @@
  * THE SOFTWARE.
  */
 
-#include <boost/test/unit_test.hpp>
+#ifndef TEST_RENDERTOOLS_H
+#define TEST_RENDERTOOLS_H
 
-#include <test/math/functions.h>
+#include "test/math/Vector.h"
+#include "test/graphics/Color.h"
 
-BOOST_AUTO_TEST_SUITE(tFunctions)
+void renderText(void* font, char* text, Vector position, Color color);
+void renderCube(Vector center, Vector size, Color color);
+void renderParallelepiped(Vector from, Vector to, Color color);
+void renderCubeFrame(Vector center, Vector size, Color color);
 
-BOOST_AUTO_TEST_CASE(min) {
-	BOOST_CHECK_EQUAL(min(1, 2), 1);
-}
-
-BOOST_AUTO_TEST_CASE(max) {
-	BOOST_CHECK_EQUAL(max(1, 2), 2);
-}
-
-BOOST_AUTO_TEST_CASE(clamp) {
-	BOOST_CHECK_EQUAL(clamp(-0.5, 0, 1), 0);
-	BOOST_CHECK_EQUAL(clamp(0.5, 0, 1), 0.5);
-	BOOST_CHECK_EQUAL(clamp(1.5, 0, 1), 1);
-}
-
-BOOST_AUTO_TEST_CASE(sign2) {
-	BOOST_CHECK_EQUAL(sign2(1, 2), -1);
-	BOOST_CHECK_EQUAL(sign2(2, 2), 0);
-	BOOST_CHECK_EQUAL(sign2(3, 2), 1);
-}
-
-BOOST_AUTO_TEST_CASE(sign) {
-	BOOST_CHECK_EQUAL(sign(-4), -1);
-	BOOST_CHECK_EQUAL(sign(0), 0);
-	BOOST_CHECK_EQUAL(sign(4), 1);
-}
-
-BOOST_AUTO_TEST_SUITE_END()
+#endif //TEST_RENDERTOOLS_H

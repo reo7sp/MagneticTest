@@ -19,8 +19,17 @@
  * THE SOFTWARE.
  */
 
-#include "test/graphics/RenderEngine.h"
+#include "test/tools/TimeTools.h"
 
-int main(int argc, char **argv) {
-	return renderEngineMain(argc, argv);
+#include <time.h>
+#include <unistd.h>
+
+double getTimeDetailed() {
+	struct timespec spec;
+	clock_gettime(CLOCK_REALTIME, &spec);
+	return spec.tv_sec + spec.tv_nsec / 1.0e9;
+}
+
+unsigned long getTime() {
+	return (unsigned long) time(NULL);
 }
